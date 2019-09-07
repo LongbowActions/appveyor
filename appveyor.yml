@@ -1,0 +1,26 @@
+﻿version: 2.2.{build}
+branches:
+  only:
+  - master
+  - dev
+image: Visual Studio 2017
+clone_depth: 1
+init:
+- ps: git version
+install:
+- ps: >-
+    dotnet --version
+
+    $PSVersionTable
+build_script:
+- ps: >-
+    appveyor DownloadFile https://github.com/LongbowActions/appveyor/raw/master/build.ps1 build.ps1
+
+    powershell .\build.ps1
+test_script:
+- ps: >-
+    appveyor DownloadFile https://github.com/LongbowActions/appveyor/raw/master/test.ps1 test.ps1
+
+    powershell .\test.ps1
+artifacts:
+- path: '**\*.nupkg'
