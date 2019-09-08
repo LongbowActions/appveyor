@@ -21,7 +21,7 @@
 
 function downloadFiles () {
 	$projectName = $($env:APPVEYOR_PROJECT_NAME)
-    $longbow = ("Longbow.Logging","Longbow.Web")
+    $longbow = ("Longbow.Logging","Longbow.Web","Longbow.Data")
 	if ($longbow -contains $projectName) {
 		downloadFromLongbow
 	}
