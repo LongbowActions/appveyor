@@ -16,4 +16,28 @@
     dotnet pack $projName -c $config -p:Version=$packVersion
 }
 
-packProj
+function testProj ($target) {
+	$projName = "test\$($env:APPVEYOR_PROJECT_NAME).Test"
+    write-host "dotnet test $projName -f $target" -ForegroundColor Cyan
+    dotnet test $projName -f $target
+}
+
+function runUniTest () {
+	$branch = $($env:APPVEYOR_REPO_BRANCH)
+	if ($branch -eq "master") {
+		testProj net472
+		testProj netcoreapp2.2
+	}
+	else {
+		write-host """$($env:APPVEYOR_REPO_PROVIDER)"" UnitTest has been skipped as environment variable has not matched (""APPVEYOR_REPO_BRANCH"" is ""$($env:APPVEYOR_REPO_BRANCH)"", should be ""master"")" -BackgroundColor yellow -ForegroundColor black
+	}
+}
+
+$action = $args[0]
+
+if ($action -eq "UnitTest") {
+	runUniTest
+}
+else {
+	packProj
+}
