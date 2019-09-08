@@ -10,8 +10,6 @@ init:
 install:
 - ps: >-
     dotnet --version
-
-    $PSVersionTable
 build_script:
 - ps: >-
     appveyor DownloadFile https://github.com/LongbowActions/appveyor/raw/master/build.ps1 build.ps1

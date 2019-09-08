@@ -5,6 +5,9 @@
         $config = "Release"
     }
 
+	# download link files
+	downloadFiles
+
 	$packVersion = $env:APPVEYOR_BUILD_VERSION
     if ($env:APPVEYOR_REPO_BRANCH -ne "master") {
         $packVersion += "-beta"
@@ -14,6 +17,19 @@
 
     write-host "dotnet pack $projName -c $config" -ForegroundColor Cyan
     dotnet pack $projName -c $config -p:Version=$packVersion
+}
+
+function downloadFiles () {
+	$projectName = $($env:APPVEYOR_PROJECT_NAME)
+	if ($projectName -eq "Longbow.Logging") {
+		downloadFromLongbow
+	}
+}
+
+function downloadFromLongbow ($file) {
+    $repoUrl = "https://github.com/LongbowGroup/Longbow.git"
+    write-host "git clone $repoUrl" -ForegroundColor Cyan
+	git clone -q --depth=1 --branch=master $repoUrl c:\projects\Longbow
 }
 
 function testProj ($target) {
