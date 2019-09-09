@@ -22,3 +22,7 @@ test_script:
     powershell .\build.ps1 UnitTest
 artifacts:
 - path: '**\*.nupkg'
+deploy:
+- provider: NuGet
+  api_key:
+    secure: TRypnguvqxxG4nJOU8dEMuOr6vdoVvWWDa2qgDxHnHxyWshjqXrZJHpGTEl9joJ5
