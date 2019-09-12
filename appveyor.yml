@@ -16,10 +16,10 @@ build_script:
 - ps: >-
     appveyor DownloadFile https://github.com/LongbowActions/appveyor/raw/master/build.ps1 build.ps1
 
-    ./build.ps1 Pack
+    .\build.ps1 Pack
 test_script:
 - ps: >-
-    ./build.ps1 UnitTest
+    .\build.ps1 UnitTest
 artifacts:
 - path: '**\*.nupkg'
 deploy:
